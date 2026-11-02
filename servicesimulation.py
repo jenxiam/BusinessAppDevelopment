@@ -5,12 +5,7 @@ This file will also be responsible for graphing and graph configuration.
 
 import random
 import csv
-import importlib
-
-try:
-    plt = importlib.import_module("matplotlib.pyplot")
-except ModuleNotFoundError:
-    plt = None
+import matplotlib.pyplot as plt  # type: ignore[import-not-found]
 
 def configure_simulation():
     product_name = input("Enter the product name: ")
@@ -28,8 +23,7 @@ def run_simulation():
     with open("SimulationHistory.csv", "a", newline="") as f:
         f.seek(0)
         rows = list(csv.DictReader(f))
-        simulation_number = max((int(row["SimulationNumber"]) for row in rows), default=0) + 1
-        f.seek(0, 2)
+        simulation_number = max((int(row["SimulationNumber"]) for row in rows)) + 1
         writer = csv.writer(f)
         if not rows:
             writer.writerow(["SimulationNumber", "ProductName", "DayCount", "Profit"])
@@ -44,7 +38,7 @@ def run_simulation():
 
 
 def fetch_simulation(simulation_number):
-    with open("SimulationHistory.csv", newline="") as f:
+    with open("SimulationHistory.csv", "r") as f:
         for row in csv.DictReader(f):
             if row["SimulationNumber"] == str(simulation_number):
                 return row
@@ -66,12 +60,4 @@ def graph_simulation(simulation_number):
 
 
 if __name__ == "__main__":
-    action = input("Enter 1 to run a simulation or 2 to view one: ")
-    if action == "1":
-        simulation_number = run_simulation()
-        print(f"Simulation number: {simulation_number}")
-    elif action == "2":
-        simulation_number = int(input("Enter the simulation number: "))
-        graph_simulation(simulation_number)
-    else:
-        print("Invalid selection.")
+    pass

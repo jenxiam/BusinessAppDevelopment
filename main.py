@@ -37,8 +37,7 @@ while True:
     elif choice == "5":
         break
     elif choice == "6":
-        clear = lambda: os.system('cls')
-        clear()
+        os.system('cls')
     else:
         print("Invalid choice. Please try again.")
 

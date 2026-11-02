@@ -26,7 +26,7 @@ def add_or_remove_log():
             cost = input("Enter cost: ")
             writer.writerow([name, service, cost])
     elif choice == "remove":
-        with open("ServiceLog.csv", "r", newline="") as f:
+        with open("ServiceLog.csv", "r") as f:
             reader = csv.reader(f)
             rows = list(reader)
         name_to_remove = input("Enter name to remove: ")
