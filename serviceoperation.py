@@ -25,9 +25,10 @@ def add_or_remove_log():
         with open("ServiceLog.csv", "a", newline="") as f:
             writer = csv.writer(f)
             name = input("Enter name: ")
+            employee = input("Enter employee: ")
             service = input("Enter service: ")
-            cost = input("Enter cost: ")
-            writer.writerow([name, service, cost])
+            cost = float(input("Enter cost: "))
+            writer.writerow([name, employee, service, f"{cost:.2f}"])
     elif choice == "2":
         with open("ServiceLog.csv", "r") as f:
             reader = csv.reader(f)
@@ -51,7 +52,7 @@ def generate_graph():
     with open("ServiceLog.csv", "r") as f:
         reader = csv.reader(f)
         rows = list(reader)
-    services = [row[1] for row in rows]
+    services = [row[2] for row in rows]
     service_counts = {}
     for service in services:
         if service in service_counts:
