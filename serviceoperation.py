@@ -17,15 +17,18 @@ def view_service_log():
             print(row)
 
 def add_or_remove_log():
-    choice = input("Do you want to add or remove a log? (add/remove): ")
-    if choice == "add":
+    print(f"\nLog editing options:")
+    print(f"{"=" * 29}")
+    choice = input(f"1. Add Service Log\n2. Remove Service Log\n3. Exit\n{f'{"=" * 29}\n'}\nEnter your choice: ")
+    
+    if choice == "1":
         with open("ServiceLog.csv", "a", newline="") as f:
             writer = csv.writer(f)
             name = input("Enter name: ")
             service = input("Enter service: ")
             cost = input("Enter cost: ")
             writer.writerow([name, service, cost])
-    elif choice == "remove":
+    elif choice == "2":
         with open("ServiceLog.csv", "r") as f:
             reader = csv.reader(f)
             rows = list(reader)
@@ -39,6 +42,10 @@ def add_or_remove_log():
         with open("ServiceLog.csv", "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerows(rows_to_write)
+    elif choice == "3":
+        return
+    else:
+        print("Invalid choice. Please try again.")
 
 def generate_graph():
     with open("ServiceLog.csv", "r") as f:
@@ -60,10 +67,4 @@ def generate_graph():
     plt.show()
 
 if __name__ == "__main__":
-    action = input("1: View Service Log\n2: Add or Remove Service Log\n4: Generate Graph\nEnter your choice: ")
-    if action == "1":
-        view_service_log()
-    elif action == "2":
-        add_or_remove_log()
-    elif action == "4":
-        generate_graph()
+    pass

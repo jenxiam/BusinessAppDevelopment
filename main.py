@@ -31,7 +31,13 @@ while True:
     elif choice == "2":
         so.add_or_remove_log()
     elif choice == "3":
-        ss.run_simulation()
+        print(f"\nSimulation options:")
+        print("=" * 29)
+        choice2 = input(f"1. Run Simulation\n2. Return to Main Menu\n{f'{"=" * 29}\n'}\nEnter your choice: ")
+        if choice2 == "1":
+            ss.run_simulation()
+        else:
+            continue
     elif choice == "4":
         so.generate_graph()
     elif choice == "5":

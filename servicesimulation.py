@@ -15,19 +15,22 @@ def configure_simulation():
 
 def run_simulation():
     product_name, days_tested, price_point = configure_simulation()
-    profit = 0
+    daily_profits = []
     for day in range(days_tested):
         daily_sales = random.randint(0, 100)
         daily_profit = daily_sales * price_point
-        profit += daily_profit
-    with open("SimulationHistory.csv", "a", newline="") as f:
+        daily_profits.append(daily_profit)
+    profit = sum(daily_profits)
+    with open("SimulationHistory.csv", "a+", newline="") as f:
         f.seek(0)
         rows = list(csv.DictReader(f))
-        simulation_number = max((int(row["SimulationNumber"]) for row in rows)) + 1
+        simulation_number = max((int(row["SimulationNumber"]) for row in rows), default=0) + 1
+        f.seek(0, 2)
         writer = csv.writer(f)
-        if not rows:
+        if f.tell() == 0:
             writer.writerow(["SimulationNumber", "ProductName", "DayCount", "Profit"])
-        writer.writerow([simulation_number, product_name, days_tested, profit])
+        for day_count, daily_profit in enumerate(daily_profits, start=1):
+            writer.writerow([simulation_number, product_name, day_count, daily_profit])
 
     plt.bar([product_name], [profit])
     plt.xlabel("Product Name")
@@ -39,10 +42,15 @@ def run_simulation():
 
 def fetch_simulation(simulation_number):
     with open("SimulationHistory.csv", "r") as f:
-        for row in csv.DictReader(f):
-            if row["SimulationNumber"] == str(simulation_number):
-                return row
-    return None
+        rows = [
+            row
+            for row in csv.DictReader(f)
+            if row["SimulationNumber"] == str(simulation_number)
+        ]
+    if not rows:
+        return None
+    rows[0]["Profit"] = str(sum(float(row["Profit"]) for row in rows))
+    return rows[0]
 
 
 def graph_simulation(simulation_number):
