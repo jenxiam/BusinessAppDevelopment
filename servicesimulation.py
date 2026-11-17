@@ -9,8 +9,16 @@ import matplotlib.pyplot as plt  # type: ignore[import-not-found]
 
 def configure_simulation():
     product_name = input("Enter the product name: ")
-    days_tested = int(input("Enter the number of days tested: "))
-    price_point = float(input("Enter the price point: "))
+    try:
+        days_tested = int(input("Enter the number of days tested: "))
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        return configure_simulation()
+    try:
+        price_point = float(input("Enter the price point: "))
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        return configure_simulation()
     return product_name, days_tested, price_point
 
 def run_simulation():
@@ -20,7 +28,6 @@ def run_simulation():
         daily_sales = random.randint(0, 100)
         daily_profit = daily_sales * price_point
         daily_profits.append(daily_profit)
-    profit = sum(daily_profits)
     with open("SimulationHistory.csv", "a+", newline="") as f:
         f.seek(0)
         rows = list(csv.DictReader(f))
@@ -32,40 +39,38 @@ def run_simulation():
         for day_count, daily_profit in enumerate(daily_profits, start=1):
             writer.writerow([simulation_number, product_name, day_count, daily_profit])
 
-    plt.bar([product_name], [profit])
-    plt.xlabel("Product Name")
-    plt.ylabel("Profit")
-    plt.title("Simulation Profit Graph")
+    day_counts = list(range(1, days_tested + 1))
+    plt.plot(day_counts, daily_profits)
+    plt.xlabel("Day")
+    plt.ylabel("Daily Profit")
+    plt.title(f"Simulation {simulation_number} Profit by Day: {product_name}")
     plt.show()
     return simulation_number
 
-
 def fetch_simulation(simulation_number):
     with open("SimulationHistory.csv", "r") as f:
-        rows = [
-            row
-            for row in csv.DictReader(f)
-            if row["SimulationNumber"] == str(simulation_number)
-        ]
+        rows = [row for row in csv.DictReader(f) if row["SimulationNumber"] == str(simulation_number)]
     if not rows:
         return None
-    rows[0]["Profit"] = str(sum(float(row["Profit"]) for row in rows))
-    return rows[0]
 
-
-def graph_simulation(simulation_number):
-    simulation = fetch_simulation(simulation_number)
-    if simulation is None:
-        print(f"Simulation {simulation_number} was not found.")
-        return
-
-    profit = float(simulation["Profit"])
-    plt.bar([simulation["ProductName"]], [profit])
-    plt.xlabel("Product Name")
-    plt.ylabel("Profit")
-    plt.title(f"Simulation {simulation_number} Profit Graph")
+    day_counts = [int(row["DayCount"]) for row in rows]
+    daily_profits = [float(row["Profit"]) for row in rows]
+    plt.plot(day_counts, daily_profits)
+    plt.xlabel("Day")
+    plt.ylabel("Daily Profit")
+    plt.title(f"Simulation {simulation_number} Profit by Day: {rows[0]['ProductName']}")
     plt.show()
+    plt.savefig(f"Simulation_{simulation_number}_ProfitGraph.png")
 
+def fetch_simulation_numbers():
+    with open("SimulationHistory.csv", "r") as f:
+        rows = list(csv.DictReader(f))
+    simulation_numbers = sorted(set(int(row["SimulationNumber"]) for row in rows))
+    print(f"\nAvailable Simulation Numbers:")
+    print(f"{"=" * 29}")
+    for number in simulation_numbers:
+        print(f"\n{number}")
+    print(f"\n{"=" * 29}\n")
 
 if __name__ == "__main__":
     pass

@@ -18,33 +18,41 @@ while True:
     print("Computer repair shop terminal")
     print("=" * 29)
     print("1. View Service Log")
-    print("2. Add or Remove Service Log")
-    print("3. Run Simulation")
-    print("4. Generate Graph")
-    print("5. Exit")
-    print("6. Clear Output")
+    print("2. Generate Report (Text)")
+    print("3. Add or Remove Service Log")
+    print("4. Run Simulation")
+    print("5. View Current Product Performance (Graph)")
+    print("6. Exit")
+    print("7. Clear Output")
     print(f'{"=" * 29}\n')
 
     choice = input("Enter your choice: ")
     if choice == "1":
         so.view_service_log()
     elif choice == "2":
-        so.add_or_remove_log()
+        so.generate_report()
     elif choice == "3":
+        so.add_or_remove_log()
+    elif choice == "4":
         print(f"\nSimulation options:")
         print("=" * 29)
-        choice2 = input(f"1. Run Simulation\n2. Return to Main Menu\n{f'{"=" * 29}\n'}\nEnter your choice: ")
+        choice2 = input(f"1. Run Simulation\n2. Fetch Simulation Numbers\n3. View Previous Simulation\n4. Return to Main Menu\n{f'{"=" * 29}\n'}\nEnter your choice: ")
         if choice2 == "1":
             ss.run_simulation()
+            continue
+        elif choice2 == "2":
+            ss.fetch_simulation_numbers()
+            continue        
+        elif choice2 == "3":
+            ss.fetch_simulation(input("Enter the simulation number to view: "))
+            continue
         else:
             continue
-    elif choice == "4":
-        so.generate_graph()
     elif choice == "5":
-        break
+        so.generate_graph()
     elif choice == "6":
+        break
+    elif choice == "7":
         os.system('cls')
     else:
         print("Invalid choice. Please try again.")
-
-    

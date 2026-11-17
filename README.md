@@ -36,18 +36,33 @@ This function runs a custom simulation where the user can pick the product name,
 This function generates a graph based off the current product data found in ServiceLog.csv.
 ```
 
+- fetch_simulation()
+```
+This function takes an input from the user (a simulation number), reads SimulationHistory.csv for the simulation number, and graphs the data.
+```
+
 ## How to Run
 1. Open the project folder in VS Code
 2. Run `main.py`
 3. Choose an option from the menu
 
-## Menu Options
+## Main Menu Options
 1. View Service Log
 2. Add or Remove Service Log
 3. Run Simulation
-4. Generate Graph
+4. View Current Product Performance (Graph)
 5. Exit
 6. Clear Output
+
+## Add or Remove Service Log Menu
+1. Add Service Log
+2. Remove Service Log
+3. Return to Main Menu
+
+## Simulation Menu Options
+1. Run Simulation
+2. View Previous Simulation
+3. Return to Main Menu
 
 ## Files
 - `main.py` - Runs the menu.
@@ -56,4 +71,14 @@ This function generates a graph based off the current product data found in Serv
 - `servicesimulation.py` - Handles simulation inputs and produces simulations.
 - `SimulationHistory.csv` - Simulation history log data.
 
-### SUBJECT TO CODE CHANGES AND WILL BE UPDATED
+## Charts
+![Total per service](ServiceLogGraph.png)
+```
+This graph shows the total amount of services by service. Troubleshooting has the most requests while repair has the least amount of requests.
+```
+
+![Total potential profit for a new product](Simulation_2_ProfitGraph.png)
+```
+This graph tests the launch of a new unreleased product. This is not net profit.
+```
+
