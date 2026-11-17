@@ -87,8 +87,8 @@ def generate_graph():
     plt.xlabel("Service")
     plt.ylabel("Count")
     plt.title("Service Log Graph")
-    plt.show()
     plt.savefig("ServiceLogGraph.png")
+    plt.show()
 
 if __name__ == "__main__":
     pass

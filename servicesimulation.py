@@ -59,8 +59,9 @@ def fetch_simulation(simulation_number):
     plt.xlabel("Day")
     plt.ylabel("Daily Profit")
     plt.title(f"Simulation {simulation_number} Profit by Day: {rows[0]['ProductName']}")
-    plt.show()
     plt.savefig(f"Simulation_{simulation_number}_ProfitGraph.png")
+    plt.show()
+    
 
 def fetch_simulation_numbers():
     with open("SimulationHistory.csv", "r") as f:
