@@ -5,7 +5,14 @@ This file will also be responsible for graphing and graph configuration.
 
 import random
 import csv
-import matplotlib.pyplot as plt  # type: ignore[import-not-found]
+import matplotlib.pyplot as plt
+
+services = {
+    "Virus removal": 50.00,
+    "Repair": 100.00,
+    "Cleaning": 25.00,
+    "Troubleshooting": 30.00
+}
 
 def configure_simulation():
     product_name = input("Enter the product name: ")
@@ -61,7 +68,6 @@ def fetch_simulation(simulation_number):
     plt.title(f"Simulation {simulation_number} Profit by Day: {rows[0]['ProductName']}")
     plt.savefig(f"Simulation_{simulation_number}_ProfitGraph.png")
     plt.show()
-    
 
 def fetch_simulation_numbers():
     with open("SimulationHistory.csv", "r") as f:
@@ -71,6 +77,19 @@ def fetch_simulation_numbers():
     print(f"{"=" * 29}")
     for number in simulation_numbers:
         print(f"\n{number}")
+    print(f"\n{"=" * 29}\n")
+
+def future_simulation():
+    trials = 1000
+    for item, price in services.items():
+        total_profit = 0
+        for i in range(trials):
+            daily_sales = random.randint(0, 100)
+            daily_profit = daily_sales * price
+            total_profit += daily_profit
+        average_profit = total_profit / trials
+        print(f"\n")
+        print(f"Average profit for {item}: ${average_profit:.2f}")
     print(f"\n{"=" * 29}\n")
 
 if __name__ == "__main__":

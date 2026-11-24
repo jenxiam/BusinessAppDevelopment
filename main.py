@@ -36,14 +36,17 @@ while True:
     elif choice == "4":
         print(f"\nSimulation options:")
         print("=" * 29)
-        choice2 = input(f"1. Run Simulation\n2. Fetch Simulation Numbers\n3. View Previous Simulation\n4. Return to Main Menu\n{f'{"=" * 29}\n'}\nEnter your choice: ")
+        choice2 = input(f"1. Run Simulation\n2. Run Product Simulation\n3. Fetch Simulation Numbers\n4. View Previous Simulation\n5. Return to Main Menu\n{f'{"=" * 29}\n'}\nEnter your choice: ")
         if choice2 == "1":
             ss.run_simulation()
             continue
         elif choice2 == "2":
+            ss.future_simulation()
+            continue
+        elif choice2 == "3":
             ss.fetch_simulation_numbers()
             continue        
-        elif choice2 == "3":
+        elif choice2 == "4":
             ss.fetch_simulation(input("Enter the simulation number to view: "))
             continue
         else:
